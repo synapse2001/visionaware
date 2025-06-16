@@ -324,6 +324,7 @@ const CameraComponent = () => {
       // Make API call to Gemini model
       // const result = await model.generateContentStream([prompt, ...imageParts]);
       const result = await getAIResponse(username, prompt, imageParts);
+      setResponseText(result.query_response)
       const generateContext = await updateEmbedding(username, imageParts,prompt);
       // console.log("generateContext", generateContext);
       // console.log("result", result);
@@ -334,7 +335,6 @@ const CameraComponent = () => {
       //   text += chunkText;
       //   setResponseText(text);
       // }
-      setResponseText(result.query_response)
       // console.log(text)
     } catch (error) {
       console.error('Error sending images to Gemini model:', error);
