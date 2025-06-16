@@ -1,0 +1,108 @@
+/* App.css */
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #FFD6BA;
+  color: #161A30; /* Set the text color for better readability */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.flexrow{
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  /* width: fit-content; */
+}
+.response{
+  width: 100%;
+}
+
+.webcam-container {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingpopup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingpopup .MuiDialogContent-root {
+  display: flex;
+  flex-direction: row;
+  /* width: 100%;  */
+  /* Adjust the width as needed */
+}
+
+.settingpopup .MuiBox-root {
+  /* margin-left: 20px;  */
+  /* Adjust the margin between columns as needed */
+}
+
+.speechsettings{
+  margin-left: 30px;
+}
+
+
+.capture-button {
+  margin-top: 16px;
+}
+
+.card-container {
+  margin-top: 16px;
+  max-width: 200vh;
+  width: 140vh;
+}
+
+
+.card {
+  border-radius: 8px;
+  /* width: 100vh; */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+  .webcam-container,
+  .card-container {
+    width: 100%; /* Make the container full width on smaller screens */
+    max-width: none; /* Remove max-width on smaller screens */
+  }
+  .flexrow{
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+  .settingpopup .MuiDialogContent-root{
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+  .settingpopup {
+    display: block;
+  }
+  .speechsettings{
+    margin-left: 0;
+  }
+}
+
+/* App.css */
