@@ -548,7 +548,7 @@ const CameraComponent = () => {
                         {selectedPrompt === "custom" || selectedPrompt === "assistant" ? (
                           <>
                             {customPrompt}
-                            <IconButton style={{ marginBottom: 8 }} onClick={() => setShowCustomPromptDialog(true)} color="primary">
+                            <IconButton style={{ marginBottom: 8 }} onClick={() => setShowCustomPromptDialog(true)} color="primary" disabled>
                               <EditIcon />
                             </IconButton>
                           </>
