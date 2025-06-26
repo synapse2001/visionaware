@@ -323,9 +323,14 @@ const CameraComponent = () => {
     try {
       // Make API call to Gemini model
       // const result = await model.generateContentStream([prompt, ...imageParts]);
-      const result = await getAIResponse(username, prompt, imageParts);
-      setResponseText(result.query_response)
-      const generateContext = await updateEmbedding(username, imageParts,prompt);
+      const aiPromise = getAIResponse(username, prompt, imageParts);
+      const embeddingPromise = updateEmbedding(username, imageParts, prompt);
+
+      const result = await aiPromise;
+      setResponseText(result.query_response);
+      // UI and speech can proceed here
+
+      await embeddingPromise;
       // console.log("generateContext", generateContext);
       // console.log("result", result);
       // let text = '';

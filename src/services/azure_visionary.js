@@ -1,6 +1,10 @@
 import axios from "axios";
 const BASE_URL = "https://visionary-ai-eyheh5emgzaubaad.eastus2-01.azurewebsites.net/api";
 
+const get_ai_response_key = process.env.REACT_APP_GET_AI_RESPONSE;
+const onboarding_key = process.env.REACT_APP_ONBOARDING;
+const update_embedding_key = process.env.REACT_APP_UPDATE_EMBEDDING;
+
 /**
  * Calls the get_ai_response endpoint.
  * @param {string} username
@@ -9,7 +13,7 @@ const BASE_URL = "https://visionary-ai-eyheh5emgzaubaad.eastus2-01.azurewebsites
  * @returns {Promise<Object>}
  */
 export async function getAIResponse(username, user_query, image_parts = []) {
-  const url = `${BASE_URL}/get_ai_response?code=kw9Ql6LUYy1q85cmhVzLEW2-1JawSEMJP1xd7efAj2nSAzFu79xL5w==`;
+  const url = `${BASE_URL}/get_ai_response?code=${get_ai_response_key}`;
   const body = {
     username,
     user_query,
@@ -31,7 +35,7 @@ export async function getAIResponse(username, user_query, image_parts = []) {
  * @returns {Promise<Object>}
  */
 export async function onboarding(username) {
-  const url = `${BASE_URL}/onboarding?code=BYqkoe6F6MUeYG4z6BDPd2ud9UsWeS4SY2UEh2as7kIHAzFuP8NAVg==`;
+  const url = `${BASE_URL}/onboarding?code=${onboarding_key}`;
   const body = { username };
   try {
     const response = await axios.post(url, body, {
@@ -51,7 +55,7 @@ export async function onboarding(username) {
  * @returns {Promise<Object>}
  */
 export async function updateEmbedding(username, image_parts = [], user_query = "") {
-  const url = `${BASE_URL}/update_embedding?code=umSfjH4zbpNQWEov1CrAUS9gD62gXNAu4D6Aw8PIl_w2AzFuOEH6JA==`;
+  const url = `${BASE_URL}/update_embedding?code=${update_embedding_key}`;
   const body = { username, image_parts, user_query };
   try {
     const response = await axios.post(url, body, {

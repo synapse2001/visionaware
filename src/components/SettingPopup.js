@@ -47,6 +47,7 @@ const SettingPopup = ({
   const synth = window.speechSynthesis;
   const [voiceList, setVoiceList] = React.useState([]);
   const theme = useTheme();
+  const [tempUsername, setTempUsername] = useState(username);
 
 
   useEffect(() => {
@@ -70,7 +71,7 @@ const SettingPopup = ({
       usetextTospeech: true,
       userecurringSession: true,
       imageLimitValue: 5,
-      username: '',
+      // username: '',
     };
 
     handleSettingUpdate(defaultSettings);
@@ -86,6 +87,13 @@ const SettingPopup = ({
         const user_query = await onboarding(username);
         console.log('User', user_query);
         if (user_query.status === 'onboarded'){
+          if (username === tempUsername){
+            handleSettingUpdate({ usernameLock: !usernameLock });
+            setSnackbarOpen(true);
+            setSnackbarSeverity('warning');
+            setSnackbarMessage('No Changes made to username');
+            return;
+          }
           setSnackbarOpen(true);
           setSnackbarSeverity('error');
           setSnackbarMessage(user_query.message);
@@ -139,6 +147,16 @@ const SettingPopup = ({
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState('info');
   const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const handleSettingPopupClose = () => {
+    if(username === '' || usernameLock === false) {
+      setSnackbarOpen(true);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Please enter a cool username to continue and remember you make it yours by locking it');
+      return;
+    }
+    handleClose();
+  };
 
   useEffect(() => {
     let openSnackbar = false;
@@ -339,7 +357,7 @@ const SettingPopup = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <IconButton onClick={handleClose} color="primary">
+          <IconButton onClick={handleSettingPopupClose} color="primary">
             <CloseIcon />
           </IconButton>
           <IconButton onClick={handleResetToDefault} color="primary">
