@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -86,8 +86,8 @@ const SettingPopup = ({
       if (!usernameLock) {
         const user_query = await onboarding(username);
         console.log('User', user_query);
-        if (user_query.status === 'onboarded'){
-          if (username === tempUsername){
+        if (user_query.status === 'onboarded') {
+          if (username === tempUsername) {
             handleSettingUpdate({ usernameLock: !usernameLock });
             setSnackbarOpen(true);
             setSnackbarSeverity('warning');
@@ -149,7 +149,7 @@ const SettingPopup = ({
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleSettingPopupClose = () => {
-    if(username === '' || usernameLock === false) {
+    if (username === '' || usernameLock === false) {
       setSnackbarOpen(true);
       setSnackbarSeverity('error');
       setSnackbarMessage('Please enter a cool username to continue and remember you make it yours by locking it');
@@ -173,13 +173,13 @@ const SettingPopup = ({
     } else if (silenceThresholdSeconds > 2.5) {
       openSnackbar = true;
       newMessage = 'This is seconds the assistant waits for you before it starts processing your response, Increase this if you have a slow internet connection or when you tend to speak slowly.';
-      
-    // } else if (usetextTospeech && !userecurringSession) {
-    //   openSnackbar = true;
-    //   newMessage = 'The assistant will speak out the response';
-    // } else if (userecurringSession) {
-    //   openSnackbar = true;
-    //   newMessage = 'The Session will restart automatically after each speaking out assistant response';
+
+      // } else if (usetextTospeech && !userecurringSession) {
+      //   openSnackbar = true;
+      //   newMessage = 'The assistant will speak out the response';
+      // } else if (userecurringSession) {
+      //   openSnackbar = true;
+      //   newMessage = 'The Session will restart automatically after each speaking out assistant response';
     } else if (username === '' || usernameLock === false) {
       openSnackbar = true;
       newMessage = 'Please enter a cool username to continue and remember you make it yours by locking it';
@@ -194,6 +194,14 @@ const SettingPopup = ({
   return (
     <Dialog open={open} onClose={handleClose} className='settingpopup' maxWidth="md">
       <div style={{ backgroundColor: theme.palette.accent.main }}>
+        <DialogActions>
+          <IconButton onClick={handleSettingPopupClose} color="primary">
+            <CloseIcon />
+          </IconButton>
+          <IconButton onClick={handleResetToDefault} color="primary">
+            <SettingsBackupRestoreIcon />
+          </IconButton>
+        </DialogActions>
         <DialogTitle>Settings</DialogTitle>
         <DialogContent>
           <div >
@@ -206,6 +214,39 @@ const SettingPopup = ({
                   </MenuItem>
                 ))}
               </Select>
+            </Box>
+            <Box m={2}>
+              <Typography gutterBottom>Username</Typography>
+            </Box>
+            <Box m={2} display="flex" alignItems="center" justifyContent="space-between">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => handleSettingUpdate({ username: e.target.value })}
+                style={{
+                  width: '80%',
+                  padding: '15px',
+                  borderRadius: '8px',
+                  border: `1px solid ${theme.palette.primary.main}`,
+                  backgroundColor: theme.palette.background.default,
+                  outline: theme.palette.primary.main,
+                  opacity: usernameLock ? 0.4 : 1,
+                  color: theme.palette.primary.main,
+                }}
+                disabled={usernameLock}
+              />
+              <IconButton
+                size="small"
+                style={{ marginLeft: '10px' }}
+                onClick={() => usernameLockHandler()}
+                aria-label={usernameLock ? 'Unlock username' : 'Lock username'}
+              >
+                {usernameLock ? (
+                  <LockIcon sx={{ color: theme.palette.primary.main }} />
+                ) : (
+                  <LockOpenIcon sx={{ color: theme.palette.primary.main }} />
+                )}
+              </IconButton>
             </Box>
             <Box m={2}>
               <Typography gutterBottom>Prompt</Typography>
@@ -264,7 +305,7 @@ const SettingPopup = ({
                   usetextTospeech: !usetextTospeech,
                   userecurringSession: userecurringSession ? false : userecurringSession
                 })}
-                // disabled
+              // disabled
               />
             </Box>
             <Box m={2}>
@@ -305,39 +346,6 @@ const SettingPopup = ({
                 ))}
               </Select>
             </Box>
-            <Box m={2}>
-              <Typography gutterBottom>Username</Typography>
-            </Box>
-            <Box m={2} display="flex" alignItems="center" justifyContent="space-between">
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => handleSettingUpdate({ username: e.target.value })}
-                style={{
-                  width: '80%',
-                  padding: '15px',
-                  borderRadius: '8px',
-                  border: `1px solid ${theme.palette.primary.main}`,
-                  backgroundColor: theme.palette.background.default,
-                  outline: theme.palette.primary.main,
-                  opacity: usernameLock ? 0.4 : 1,
-                  color: theme.palette.primary.main,
-                }}
-                disabled={usernameLock}
-              />
-            <IconButton
-              size="small"
-              style={{marginLeft: '10px'}}
-              onClick={() => usernameLockHandler()}
-              aria-label={usernameLock ? 'Unlock username' : 'Lock username'}
-            >
-              {usernameLock ? (
-                <LockIcon sx={{ color: theme.palette.primary.main }} />
-              ) : (
-                <LockOpenIcon sx={{ color: theme.palette.primary.main }} />
-              )}
-            </IconButton>
-            </Box>
             {snackbarOpen && (
               <Snackbar
                 open={snackbarOpen}
@@ -356,14 +364,6 @@ const SettingPopup = ({
               </Snackbar>)}
           </div>
         </DialogContent>
-        <DialogActions>
-          <IconButton onClick={handleSettingPopupClose} color="primary">
-            <CloseIcon />
-          </IconButton>
-          <IconButton onClick={handleResetToDefault} color="primary">
-            <SettingsBackupRestoreIcon />
-          </IconButton>
-        </DialogActions>
       </div>
     </Dialog>
   );
